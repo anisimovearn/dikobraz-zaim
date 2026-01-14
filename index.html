@@ -1,0 +1,253 @@
+<div class="bg" aria-hidden="true"></div>
+
+<header class="header">
+  <div class="container header__inner">
+    <a class="brand" href="#">
+      <img src="https://i.ibb.co/kgf30GKK/20260114-1506-Image-Generation-remix-01kexzg311f62awh15pvve821s-1.png" alt="DIKOBRAZ ZAIM" class="brand__logo">
+      <span class="brand__name">DIKOBRAZ ZAIM</span>
+    </a>
+
+    <nav class="nav" aria-label="Навигация">
+      <a class="nav__link" href="#offers">Предложения</a>
+      <a class="nav__link" href="#how">Как это работает</a>
+      <a class="nav__link" href="#faq">Вопросы</a>
+    </nav>
+
+    <a class="btn btn--ghost header__cta" href="#calc">Подобрать займ</a>
+  </div>
+</header>
+
+<main>
+  <!-- HERO -->
+  <section class="hero">
+    <div class="container hero__grid">
+      <div class="hero__text">
+        <h1 class="h1">
+          Подбор займов онлайн<br />
+          <span class="h1__accent">по понятным условиям</span>
+        </h1>
+
+        <p class="lead">
+          Сравните предложения МФО по сумме и сроку. Мы не выдаём займы, а показываем варианты и перенаправляем на сайты партнёров.
+        </p>
+
+        <div class="hero__badges">
+          <div class="badge">Онлайн-оформление</div>
+          <div class="badge">Выгодные параметры</div>
+          <div class="badge">Быстрая выдача</div>
+          <div class="badge">Без справок</div>
+          <div class="badge">Лучшие условия</div>
+          <div class="badge">Без отказа</div>
+          <div class="badge">Понятная структура</div>
+        </div>
+
+        <div class="hero__actions">
+          <a class="btn btn--primary" href="#offers">Смотреть предложения</a>
+        </div>
+
+        <p class="tiny tiny--muted">
+          *Итоговые условия и решение об одобрении принимает кредитор/МФО.
+        </p>
+      </div>
+
+      <!-- CALC -->
+      <div class="card card--calc" id="calc">
+        <div class="card__head">
+          <h2 class="h2">Калькулятор займа</h2>
+          <p class="muted">Выберите сумму и срок, чтобы отфильтровать предложения.</p>
+        </div>
+
+        <div class="calc">
+          <!-- AMOUNT -->
+         <div class="field">
+		<div class="field__row">
+			<label class="label" for="amount">Сумма займа</label>
+
+    <!-- капсула (ввод + ₽) -->
+<div class="pill">
+	<input
+        id="amountInput"
+        type="number"
+        min="1000"
+        max="100000"
+        step="500"
+        value="25000"
+        inputmode="numeric"
+      />
+      ₽
+    </div>
+  </div>
+
+  <!-- ползунок -->
+  <input id="amount" type="range" min="1000" max="100000" step="500" value="25000" />
+  <div class="field__hint"><span>1 000 ₽</span><span>100 000 ₽</span></div>
+</div>
+
+
+          <!-- DAYS -->
+          <div class="field">
+            <div class="field__row">
+              <label class="label" for="days">Срок</label>
+
+              <!-- капсула (ввод + дней) -->
+              <div class="pill">
+                <input
+                  id="daysInput"
+                  type="number"
+                  value="14"
+                  min="1"
+                  max="30"
+                  step="1"
+                  inputmode="numeric"
+                />
+                дней
+              </div>
+            </div>
+
+            <input id="days" type="range" min="1" max="30" step="1" value="14" />
+            <div class="field__hint"><span>1</span><span>30</span></div>
+          </div>
+
+          <div class="calc__summary">
+            <div class="summary__item">
+              <span class="muted">Предложений найдено</span>
+              <strong id="countOut">—</strong>
+            </div>
+            <div class="summary__item">
+              <span class="muted">Примерная переплата*</span>
+              <strong id="overpayOut">—</strong>
+            </div>
+          </div>
+
+          <button class="btn btn--primary btn--full" id="applyFilters">
+            Показать подходящие предложения
+          </button>
+
+          <p class="tiny tiny--muted">
+            *Расчёты примерные. Проверяйте условия на сайте партнёра перед оформлением.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- OFFERS -->
+  <section class="section" id="offers">
+    <div class="container">
+      <div class="section__head">
+        <h2 class="h2">Предложения</h2>
+        <p class="muted">Ниже представлены лучшие по нашему мнению займы</p>
+      </div>
+
+      <div class="offers" id="offersGrid"></div>
+
+      <div class="disclaimer">
+        <h3 class="h3">Важная информация</h3>
+        <ul class="list">
+          <li>Сервис не является кредитором. Мы показываем предложения партнеров и перенаправляем на их сайты.</li>
+          <li>Решение об одобрении принимает МФО/кредитор. Мы не гарантируем выдачу займа.</li>
+          <li>Перед оформлением внимательно изучите условия договора, ПСК и правила обработки данных.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW -->
+  <section class="section section--soft" id="how">
+    <div class="container">
+      <div class="section__head">
+        <h2 class="h2">Как это работает</h2>
+        <p class="muted">Три простых шага. Которые приведут Вас к желаемому.</p>
+      </div>
+
+      <div class="steps">
+        <div class="step">
+          <div class="step__num">01</div>
+          <div class="step__title">Задаёте параметры</div>
+          <div class="step__text">Выбираете сумму и срок, чтобы отсеять лишнее.</div>
+        </div>
+        <div class="step">
+          <div class="step__num">02</div>
+          <div class="step__title">Сравниваете предложения</div>
+          <div class="step__text">Ставка, срок, лимит, скорость решения.</div>
+        </div>
+        <div class="step">
+          <div class="step__num">03</div>
+          <div class="step__title">Переходите к партнёру</div>
+          <div class="step__text">Нажимаете «Оформить» и подаёте заявку на сайте МФО.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="section" id="faq">
+    <div class="container">
+      <div class="section__head">
+        <h2 class="h2">Вопросы и ответы</h2>
+        <p class="muted">Чтобы расставить всё на свои места.</p>
+      </div>
+
+      <div class="faq">
+        <details class="qa">
+          <summary>Займы до 14 дней без процентов?</summary>
+          <p>
+            Да, большинство МФО предлагают такие условия для новых клиентов.
+            Внимательно изучайте условия на сайте партнёра перед оформлением.
+          </p>
+        </details>
+
+        <details class="qa">
+          <summary>Как быстро можно получить деньги?</summary>
+          <p>
+            В большинстве случаев решение принимается в течение 5 минут.
+            Скорость зависит от выбранного партнёра и корректности заполнения анкеты.
+          </p>
+        </details>
+
+        <details class="qa">
+          <summary>Какие документы нужны для оформления?</summary>
+          <p>
+            Достаточно паспорта и активного номера телефона.
+            Дополнительные документы запрашиваются редко и зависят от условий партнёра.
+          </p>
+        </details>
+
+        <details class="qa">
+          <summary>Можно ли оформить займ с плохой кредитной историей?</summary>
+          <p>
+            Да, партнёры рассматривают заявки даже при проблемной кредитной истории.
+            Вероятность одобрения и условия в этом случае могут отличаться.
+          </p>
+        </details>
+      </div>
+
+      <div class="cta">
+        <div class="cta__box">
+          <div>
+            <h3 class="h3">Готовы подобрать вариант?</h3>
+            <p class="muted">Нажмите и посмотрите предложения по вашим параметрам.</p>
+          </div>
+          <a class="btn btn--primary" href="#calc">Перейти к калькулятору</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container footer__inner">
+      <div class="footer__brand">
+        <img src="https://i.ibb.co/kgf30GKK/20260114-1506-Image-Generation-remix-01kexzg311f62awh15pvve821s-1.png" alt="DIKOBRAZ ZAIM" class="brand__logo">
+        <span>DIKOBRAZ ZAIM</span>
+      </div>
+
+      <div class="footer-seo">
+        <p>
+          Подбор займов онлайн, сравнение МФО, микрозаймы онлайн, займ на карту без отказа, быстрые займы онлайн, займ срочно без отказа, займ по паспорту, займ без справок и поручителей, микрозаймы 24/7, займ с плохой кредитной историей, займ без проверки КИ, онлайн калькулятор займов, расчет займа онлайн, агрегатор микрозаймов, подбор финансовых предложений, лучшие и проверенные МФО, займ на карту мгновенно, займ за 5–15 минут, займ без посещения офиса, займ дистанционно.
+        </p>
+      </div>
+
+      <div class="footer__copy">© <span id="year"></span> Информационный сервис</div>
+    </div>
+  </footer>
+</main>
