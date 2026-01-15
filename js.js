@@ -2,44 +2,64 @@ window.addEventListener("DOMContentLoaded", () => {
   const fmt = (n) => new Intl.NumberFormat("ru-RU").format(n);
 
   // ДЕМО офферы (замени на свои + партнерские ссылки)
-  const offers = [
-    {
-      name: "МФО Партнер #1",
-      logo: "P1",
-      rate: "от 0% в день",
-      sumMin: 1000,
-      sumMax: 30000,
-      daysMin: 1,
-      daysMax: 21,
-      time: "Решение: 5–15 минут",
-      note: "Первый займ может быть под 0% при соблюдении условий партнера.",
-      link: "#"
-    },
-    {
-      name: "МФО Партнер #2",
-      logo: "P2",
-      rate: "от 0.8% в день",
-      sumMin: 3000,
-      sumMax: 50000,
-      daysMin: 5,
-      daysMax: 30,
-      time: "Выдача: в день обращения",
-      note: "Условия зависит от анкеты и решения кредитора.",
-      link: "#"
-    },
-    {
-      name: "МФО Партнер #3",
-      logo: "P3",
-      rate: "от 0.5% в день",
-      sumMin: 2000,
-      sumMax: 100000,
-      daysMin: 7,
-      daysMax: 30,
-      time: "Онлайн 24/7",
-      note: "Проверяйте ПСК и условия договора на сайте партнёра.",
-      link: "#"
-    }
-  ];
+const offers = [
+  {
+    name: "Займер",
+    logo: "https://i.ibb.co/nqNmWwcr/1.png",
+    rate: "0% в день",
+    dailyRate: 0,
+    sumMin: 2000,
+    sumMax: 30000,
+    daysMin: 5,
+    daysMax: 30,
+    time: "Онлайн 24/7, решение за ~5 мин",
+    note:
+      "Первый займ до 30 000 ₽ без процентов при возврате в срок. Решение автоматически.",
+    link: "https://www.zaymer.ru/"
+  },
+  {
+    name: "Е Капуста",
+    logo: "https://i.ibb.co/4Zg5FFW6/2.png",
+    rate: "0% в день",
+    dailyRate: 0,
+    sumMin: 1000,
+    sumMax: 30000,
+    daysMin: 7,
+    daysMax: 30,
+    time: "Быстрое решение, оформление онлайн",
+    note:
+      "Оформление без посещения офиса, деньги переводятся на карту/счет.",
+    link: "https://ekapusta.ru/"
+  },
+  {
+    name: "А Деньги",
+    logo: "https://i.ibb.co/QvzrvZLG/3.png",
+    rate: "от ~0.5% — 0.8% в день",
+    dailyRate: 0.005,
+    sumMin: 2000,
+    sumMax: 100000,
+    daysMin: 7,
+    daysMax: 30,
+    time: "Онлайн, круглосуточно",
+    note:
+      "Займы до 100 000 ₽, прозрачные условия без скрытых комиссий.",
+    link: "https://adengi.ru/"
+  },
+  {
+    name: "LIME Займ",
+    logo: "https://i.ibb.co/v6FT9T1D/4.png",
+    rate: "от ~0.5% — 0.8% в день",
+    dailyRate: 0.005,
+    sumMin: 4000,
+    sumMax: 100000,
+    daysMin: 7,
+    daysMax: 30,
+    time: "Оперативное решение, до 15 мин",
+    note:
+      "Оформление полностью онлайн, гибкие сроки и суммы.",
+    link: "https://www.lime-zaim.ru/"
+  }
+];
 
   const $ = (id) => document.getElementById(id);
 
@@ -71,15 +91,10 @@ window.addEventListener("DOMContentLoaded", () => {
     return Math.round(value / step) * step;
   }
 
-  function calcOverpay(sum, d) {
-    // Просто ориентир для UI (не обещание и не оферта)
-    // До 14 дней и 50000₽ — 0% переплата
-    if (d <= 14 && sum <= 50000) {
-      return 0;
-    }
-    // Иначе 1% в день
-    const daily = 0.01;
-    return Math.round(sum * daily * d);
+  function calcOverpay(sum, d, rate) {
+    // Рассчитываем переплату на основе переданной ставки
+    // rate - это дневная процентная ставка (0.005 = 0.5%)
+    return Math.round(sum * rate * d);
   }
 
   function render(list) {
@@ -91,7 +106,7 @@ window.addEventListener("DOMContentLoaded", () => {
       <article class="offer">
         <div class="offer__top">
           <div class="offer__logo">
-            <div class="logo">${o.logo}</div>
+            <div class="logo"><img src="${o.logo}" alt="${o.name}" style="width: 100%; height: 100%; object-fit: cover; border-radius: 14px;"></div>
             <div>
               <div class="offer__name">${o.name}</div>
               <div class="muted" style="font-size:12px;margin-top:2px">${o.time}</div>
@@ -128,11 +143,40 @@ window.addEventListener("DOMContentLoaded", () => {
       (o) => a >= o.sumMin && a <= o.sumMax && d >= o.daysMin && d <= o.daysMax
     );
 
+    // Логика отбора для отображения:
+    // - Если сумма ≤ 30000 и срок ≤ 30 дней: показываем подходящих из первых 2 (Займер, Е Капуста)
+    // - Если сумма > 30000 или срок > 30: показываем подходящих из последних 2 (А Деньги, LIME)
+    let toDisplay = [];
+    let rateForCalc = 0;
+    
+    if (a <= 30000 && d <= 30) {
+      // Берём из первых двух тех, кто подходит по параметрам
+      toDisplay = offers.slice(0, 2).filter(
+        (o) => a >= o.sumMin && a <= o.sumMax && d >= o.daysMin && d <= o.daysMax
+      );
+      rateForCalc = 0; // Займер и Е Капуста имеют 0% ставку
+    } else {
+      // Берём из последних двух тех, кто подходит по параметрам
+      toDisplay = offers.slice(2, 4).filter(
+        (o) => a >= o.sumMin && a <= o.sumMax && d >= o.daysMin && d <= o.daysMax
+      );
+      rateForCalc = 0.005; // А Деньги и LIME имеют 0.5% ставку
+    }
+
+    // Если нет подходящих по условиям - показываем все 4 и берем минимальную ставку
+    if (toDisplay.length === 0) {
+      toDisplay = offers;
+      rateForCalc = Math.min(...filtered.map(o => o.dailyRate));
+      if (filtered.length === 0) {
+        rateForCalc = 0;
+      }
+    }
+
     if (countOut) countOut.textContent = String(filtered.length);
     if (overpayOut)
-      overpayOut.textContent = filtered.length ? `${fmt(calcOverpay(a, d))} ₽` : "—";
+      overpayOut.textContent = filtered.length ? `${fmt(calcOverpay(a, d, rateForCalc))} ₽` : "—";
 
-    render(filtered.length ? filtered : offers);
+    render(toDisplay);
   }
 
   // --- ИНИЦИАЛИЗАЦИЯ ---
